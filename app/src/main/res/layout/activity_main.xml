@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context="com.javxu.naivephotodemo.MainActivity">
+
+    <ImageButton
+        android:id="@+id/ib_photo"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@android:drawable/ic_input_add"/>
+
+</RelativeLayout>
