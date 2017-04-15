@@ -19,8 +19,6 @@ import android.widget.Toast;
 
 import java.io.File;
 
-import static com.javxu.naivephotodemo.FileUtil.getOriginalUriFromFile;
-
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int REQUEST_PERMISSION = 0;
@@ -99,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mImageFile.createNewFile();
             mCropFile.createNewFile();
 
-            mImageUri = getOriginalUriFromFile(this, mImageFile); // 拍摄时使用，需要putExtra, 要FileProvider处理
+            mImageUri = FileUtil.getOriginalUriFromFile(this, mImageFile); // 拍摄时使用，需要putExtra, 要FileProvider处理
             mCropUri = Uri.fromFile(mCropFile); // 裁剪输出时使用，目标uri，直接Uri.fromFile()
 
             flag = true;
