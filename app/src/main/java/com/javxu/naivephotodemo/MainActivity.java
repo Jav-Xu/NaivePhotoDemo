@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 switch (which) {
                                     case 0:
                                         if (initFileAndUriSuccess()) {
+                                            // 裁剪也只是需要cropFile，否则根本不需要 initFileAndUriSuccess()
                                             toGallery();
                                         }
                                         break;
