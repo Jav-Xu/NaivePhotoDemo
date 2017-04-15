@@ -15,13 +15,13 @@ import java.io.File;
 /**
  * Project Name:  NaivePhotoDemo
  * Package Name:  com.javxu.naivephotodemo
- * File Name:     UtilTools
+ * File Name:     FileUtil
  * Creator:       Jav-Xu
  * Create Time:   2017/3/22 16:18
  * Description:   Uri 和 File 转换处理类
  */
 
-public class UtilTools {
+public class FileUtil {
 
     /**
      * 原始File -> 原始Uri，供拍照时使用 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri)

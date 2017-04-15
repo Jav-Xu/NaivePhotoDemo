@@ -11,6 +11,7 @@
         android:id="@+id/ib_photo"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:scaleType="centerInside"
         android:src="@android:drawable/ic_input_add"/>
 
 </RelativeLayout>

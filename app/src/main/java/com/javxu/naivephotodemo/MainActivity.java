@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,7 +19,7 @@ import android.widget.Toast;
 
 import java.io.File;
 
-import static com.javxu.naivephotodemo.UtilTools.getOriginalUriFromFile;
+import static com.javxu.naivephotodemo.FileUtil.getOriginalUriFromFile;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -146,8 +145,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cropIntent.setDataAndType(uri, "image/*"); // 这里的uri需要特定封装uri /external/images/media/24可以，/document/image:73不行
 
         cropIntent.putExtra("crop", "true");//设置裁剪
-        cropIntent.putExtra("aspectX", 1);//裁剪宽高比例
-        cropIntent.putExtra("aspectY", 1);
+        /*cropIntent.putExtra("aspectX", 1);//裁剪宽高比例
+        cropIntent.putExtra("aspectY", 1);*/
 
         cropIntent.putExtra("return-data", false);
         cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCropUri); //裁剪输出uri直接Uri.fromFile(file)即可，高低版本都是如此
@@ -167,16 +166,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (requestCode) {
             case REQUEST_CAMERA:
                 //1.直接从已注入图像数据的 mImageUri 获取原始图像文件，不过要注意图像尺寸
-                /* try {
-                    Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(mImageUri));
-                    mImageButton.setImageBitmap(bitmap);
+                /*try {
+                    //Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(mImageUri));
+                    //mImageButton.setImageBitmap(bitmap);
                     //mImageButton.setImageURI(mImageUri);//或者直接这样也可以
+
+                    int aimWidth1 = mImageButton.getWidth();
+                    int aimHeigth1 = mImageButton.getHeight();
+                    Bitmap bitmap1 = ImageUtil.getScaledBitmap(mImageFile.getAbsolutePath(), aimWidth1, aimHeigth1);
+                    mImageButton.setImageBitmap(bitmap1);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }*/
 
                 //2.传递uri（由原始File经封装得到）去裁剪
-                Uri uri_camera = UtilTools.getContentUriFromFile(MainActivity.this, mImageFile);
+                Uri uri_camera = FileUtil.getContentUriFromFile(MainActivity.this, mImageFile);
                 toCrop(uri_camera);
                 break;
             case REQUEST_GALLERY:
@@ -185,10 +189,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // 可能是 ACTION_GET_CONTENT 得来的  /document/image:73          不可直接传递裁剪
 
                 //1.直接从目标图像（已选择的原始文件）uri_gallery 获取 原始图像文件路径 再获取Bitmap，同样要注意图像尺寸
-                /*String path = UtilTools.getPathFromContentUri(MainActivity.this, uri_gallery);
-                Bitmap bitmap_g = BitmapFactory.decodeFile(path);
-                mImageButton.setImageBitmap(bitmap_g);*/
+                //String path2 = FileUtil.getPathFromContentUri(MainActivity.this, uri_gallery);
+                //Bitmap bitmap2 = BitmapFactory.decodeFile(path);
+                //mImageButton.setImageBitmap(bitmap2);
                 //mImageButton.setImageURI(uri_gallery);//或者直接这样也可以
+
+                /*int aimWidth2 = mImageButton.getWidth();
+                int aimHeigth2 = mImageButton.getHeight();
+                Bitmap bitmap2 = ImageUtil.getScaledBitmap(path2, aimWidth2, aimHeigth2);
+                mImageButton.setImageBitmap(bitmap2);*/
 
                 //2.传递返回的照片 uri（已封装）去裁剪
                 toCrop(uri_gallery);
@@ -198,9 +207,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     mImageFile.delete();
                     // 裁剪完成后，删除未经裁剪的文件，其中，相册选择得来是无效文件（因为选取时没putExtra("return-data"），拍摄的则是完整文件
 
-                    Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(mCropUri));
-                    mImageButton.setImageBitmap(bitmap);
+                    //Bitmap bitmap3 = BitmapFactory.decodeStream(getContentResolver().openInputStream(mCropUri));
+                    //mImageButton.setImageBitmap(bitmap3);
                     //mImageButton.setImageURI(mCropUri); //或者直接这样也可以
+
+                    int aimWidth3 = mImageButton.getWidth();
+                    int aimHeigth3 = mImageButton.getHeight();
+                    Bitmap bitmap3 = ImageUtil.getScaledBitmap(mCropFile.getAbsolutePath(), aimWidth3, aimHeigth3);
+                    mImageButton.setImageBitmap(bitmap3);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
